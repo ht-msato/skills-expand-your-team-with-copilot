@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
   const difficultyFilters = document.querySelectorAll(".difficulty-filter");
+  const groupByOptions = document.querySelectorAll(".groupby-option");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDay = "";
   let currentTimeRange = "";
   let currentDifficulty = "";
+  let currentGroupBy = "";
 
   // Authentication state
   let currentUser = null;
@@ -475,10 +477,56 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Display filtered activities
-    Object.entries(filteredActivities).forEach(([name, details]) => {
-      renderActivityCard(name, details);
-    });
+    // Display filtered activities, with optional grouping
+    if (!currentGroupBy) {
+      // No grouping - flat list
+      Object.entries(filteredActivities).forEach(([name, details]) => {
+        renderActivityCard(name, details);
+      });
+    } else {
+      // Build groups
+      const groups = {};
+
+      Object.entries(filteredActivities).forEach(([name, details]) => {
+        let groupKeys = [];
+
+        if (currentGroupBy === "category") {
+          const activityType = getActivityType(name, details.description);
+          groupKeys = [activityTypes[activityType]?.label || activityType];
+        } else if (currentGroupBy === "day") {
+          if (details.schedule_details && details.schedule_details.days) {
+            groupKeys = details.schedule_details.days;
+          } else {
+            groupKeys = ["Other"];
+          }
+        }
+
+        groupKeys.forEach((key) => {
+          if (!groups[key]) {
+            groups[key] = [];
+          }
+          groups[key].push([name, details]);
+        });
+      });
+
+      // Sort group keys
+      const sortedKeys = Object.keys(groups).sort();
+
+      sortedKeys.forEach((groupKey) => {
+        const groupHeader = document.createElement("div");
+        groupHeader.className = "group-header";
+        groupHeader.innerHTML = `<h3>${groupKey}</h3>`;
+        activitiesList.appendChild(groupHeader);
+
+        const groupContainer = document.createElement("div");
+        groupContainer.className = "group-container";
+        activitiesList.appendChild(groupContainer);
+
+        groups[groupKey].forEach(([name, details]) => {
+          renderActivityCard(name, details, groupContainer);
+        });
+      });
+    }
   }
 
   function buildShareLinks(activityName, details) {
@@ -501,7 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to render a single activity card
-  function renderActivityCard(name, details) {
+  function renderActivityCard(name, details, container = null) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
 
@@ -622,8 +670,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    activitiesList.appendChild(activityCard);
+    (container || activitiesList).appendChild(activityCard);
   }
+
+  // Add event listeners for group by buttons
+  groupByOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+      groupByOptions.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      currentGroupBy = button.dataset.groupby;
+      displayFilteredActivities();
+    });
+  });
 
   // Event listeners for search and filter
   searchInput.addEventListener("input", (event) => {

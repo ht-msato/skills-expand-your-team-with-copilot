@@ -757,3 +757,46 @@ body.dark-mode .activity-tag {
   background: #2a2d5a;
   color: #9fa8da;
 }
+
+/* Group by styles */
+.groupby-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.groupby-option {
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.groupby-option.active {
+  background: var(--primary);
+  color: var(--primary-text);
+  border-color: var(--primary);
+}
+
+.group-header {
+  width: 100%;
+  grid-column: 1 / -1;
+  border-bottom: 2px solid var(--primary);
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+}
+
+.group-header h3 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.group-container {
+  display: contents;
+}
