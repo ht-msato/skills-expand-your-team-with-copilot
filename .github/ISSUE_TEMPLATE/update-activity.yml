@@ -1,0 +1,88 @@
+name: Update Activity Details
+description: Request to update the description, schedule, or other details of an existing activity
+title: "Update activity: [ACTIVITY NAME]"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request changes to an existing extracurricular activity in the Mergington High School activity management system. Please provide the current name of the activity and fill in only the fields you want to change.
+
+  - type: input
+    id: activity_name
+    attributes:
+      label: Activity Name (current, exact)
+      description: The exact name of the activity as it currently appears in the system. This is case-sensitive.
+      placeholder: e.g., Chess Club
+    validations:
+      required: true
+
+  - type: textarea
+    id: new_description
+    attributes:
+      label: New Description (leave blank to keep current)
+      description: The updated description for this activity, as it should appear to students.
+      placeholder: e.g., Learn chess strategies, practice openings and endgames, and compete in tournaments.
+
+  - type: input
+    id: new_schedule
+    attributes:
+      label: New Schedule Text (leave blank to keep current)
+      description: The updated schedule display text for students.
+      placeholder: e.g., Mondays and Fridays, 3:30 PM - 5:00 PM
+
+  - type: checkboxes
+    id: new_days
+    attributes:
+      label: New Days of the Week (only check if changing the schedule days)
+      description: If you are changing the days, select ALL new meeting days (leave all unchecked to keep current days).
+      options:
+        - label: Monday
+        - label: Tuesday
+        - label: Wednesday
+        - label: Thursday
+        - label: Friday
+        - label: Saturday
+        - label: Sunday
+
+  - type: input
+    id: new_start_time
+    attributes:
+      label: New Start Time (24-hour format, leave blank to keep current)
+      description: The updated start time in HH:MM 24-hour format.
+      placeholder: e.g., 15:30
+
+  - type: input
+    id: new_end_time
+    attributes:
+      label: New End Time (24-hour format, leave blank to keep current)
+      description: The updated end time in HH:MM 24-hour format.
+      placeholder: e.g., 17:00
+
+  - type: input
+    id: new_max_participants
+    attributes:
+      label: New Maximum Participants (leave blank to keep current)
+      description: The updated maximum number of students allowed to join this activity.
+      placeholder: e.g., 25
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for Change
+      description: Briefly explain why this update is needed.
+      placeholder: e.g., The room has been changed, allowing more students to participate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: How will you verify this request has been completed correctly?
+      value: |
+        - [ ] The activity details have been updated as requested
+        - [ ] No other activity details were accidentally changed
+        - [ ] Existing participants are not affected by the change
+    validations:
+      required: true

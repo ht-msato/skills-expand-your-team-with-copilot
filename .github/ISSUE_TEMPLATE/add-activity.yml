@@ -1,0 +1,93 @@
+name: Add New Activity
+description: Request to add a new extracurricular activity to the system
+title: "Add activity: [ACTIVITY NAME]"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new extracurricular activity be added to the Mergington High School activity management system. Please fill in all fields so the request can be implemented without needing further clarification.
+
+  - type: input
+    id: activity_name
+    attributes:
+      label: Activity Name
+      description: The exact name of the new activity as it should appear in the system.
+      placeholder: e.g., Photography Club
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Activity Description
+      description: A brief description of what the activity involves. This will be shown to students.
+      placeholder: e.g., Learn photography techniques, photo editing, and compete in photography contests.
+    validations:
+      required: true
+
+  - type: input
+    id: schedule
+    attributes:
+      label: Schedule (human-readable)
+      description: The schedule as it should be displayed to students.
+      placeholder: e.g., Wednesdays, 3:30 PM - 5:00 PM
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: days
+    attributes:
+      label: Days of the Week
+      description: Select all days on which this activity meets.
+      options:
+        - label: Monday
+        - label: Tuesday
+        - label: Wednesday
+        - label: Thursday
+        - label: Friday
+        - label: Saturday
+        - label: Sunday
+    validations:
+      required: true
+
+  - type: input
+    id: start_time
+    attributes:
+      label: Start Time (24-hour format)
+      description: The time the activity starts, in HH:MM 24-hour format.
+      placeholder: e.g., 15:30
+    validations:
+      required: true
+
+  - type: input
+    id: end_time
+    attributes:
+      label: End Time (24-hour format)
+      description: The time the activity ends, in HH:MM 24-hour format.
+      placeholder: e.g., 17:00
+    validations:
+      required: true
+
+  - type: input
+    id: max_participants
+    attributes:
+      label: Maximum Number of Participants
+      description: The maximum number of students allowed to join this activity.
+      placeholder: e.g., 20
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: How will you verify this request has been completed correctly?
+      value: |
+        - [ ] The activity appears in the activity list with the correct name
+        - [ ] The description matches what was requested
+        - [ ] The schedule and time details are correct
+        - [ ] The maximum participant count is set correctly
+        - [ ] The activity starts with zero participants
+    validations:
+      required: true
