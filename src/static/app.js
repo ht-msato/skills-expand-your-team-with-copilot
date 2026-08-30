@@ -472,6 +472,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function buildShareLinks(activityName, details) {
+    const pageUrl = window.location.href;
+    const shareText = `Check out ${activityName} at Mergington High School! ${formatSchedule(
+      details
+    )}`;
+
+    return {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        pageUrl
+      )}&quote=${encodeURIComponent(shareText)}`,
+      x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText
+      )}&url=${encodeURIComponent(pageUrl)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(
+        `${shareText} ${pageUrl}`
+      )}`,
+    };
+  }
+
   // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
@@ -498,6 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
+    const shareLinks = buildShareLinks(name, details);
 
     // Create activity tag
     const tagHtml = `
@@ -568,6 +588,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `
         }
+        <div class="social-share-buttons">
+          <span class="share-label">Share:</span>
+          <a class="share-button facebook-share" href="${shareLinks.facebook}" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a class="share-button x-share" href="${shareLinks.x}" target="_blank" rel="noopener noreferrer">X</a>
+          <a class="share-button whatsapp-share" href="${shareLinks.whatsapp}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
       </div>
     `;
 
