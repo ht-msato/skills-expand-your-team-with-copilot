@@ -1,0 +1,50 @@
+name: Remove Activity
+description: Request to remove an existing extracurricular activity from the system
+title: "Remove activity: [ACTIVITY NAME]"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request that an extracurricular activity be removed from the Mergington High School activity management system. Please confirm you want to permanently remove this activity and all its enrollment data.
+
+  - type: input
+    id: activity_name
+    attributes:
+      label: Activity Name (current, exact)
+      description: The exact name of the activity to remove, as it currently appears in the system. This is case-sensitive.
+      placeholder: e.g., Chess Club
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for Removal
+      description: Please explain why this activity should be removed from the system.
+      placeholder: e.g., The club has been discontinued due to lack of a supervising teacher.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please confirm you understand what this action entails.
+      options:
+        - label: I confirm that I want this activity permanently removed from the system.
+          required: true
+        - label: I understand that all student enrollment data for this activity will also be removed.
+          required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: How will you verify this request has been completed correctly?
+      value: |
+        - [ ] The activity no longer appears in the activity list
+        - [ ] No student enrollment data remains for this activity
+        - [ ] All other activities are unaffected
+    validations:
+      required: true
